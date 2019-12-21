@@ -34,7 +34,20 @@ class polygon:
     def draw(self):
         temp=self.point1.subtract(camera)
         proj1=camera.add(temp.integerMul(-(camera.z/temp.z)))
-        print(proj1.x,proj1.y,proj1.z)
+        
+        temp=self.point2.subtract(camera)
+        proj2=camera.add(temp.integerMul(-(camera.z/temp.z)))
+        
+        temp=self.point3.subtract(camera)
+        proj3=camera.add(temp.integerMul(-(camera.z/temp.z)))
+        
+        tt.setpos(proj1.x*scale,proj1.y*scale)
+        tt.pendown()
+        tt.setpos(proj2.x*scale,proj2.y*scale)
+        tt.setpos(proj3.x*scale,proj3.y*scale)
+        tt.setpos(proj1.x*scale,proj1.y*scale)
+        tt.penup()
+                
         
 #prep
 tt=turtle.Turtle()
@@ -46,6 +59,7 @@ tt.speed(0)
 #perspective elements
 camera=point(0,0,-5)
 projPlaneZ=0
+scale=20
 
 testpoly=polygon(
 point(2,0,1),
