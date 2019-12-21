@@ -1,4 +1,5 @@
 import turtle
+import math
 
 class point:
     def __init__(self,x,y,z):
@@ -25,13 +26,26 @@ class point:
             self.z*integer)        
         
 class polygon:
-    allpollys=[]
+    allpollys=dict()
     def __init__(self,x,y,z,color):
         self.point1=x
         self.point2=y
         self.point3=z
         self.color=color
-        polygon.allpollys.append(self)
+        
+        #render priority
+        distance1=math.sqrt((camera.x-self.point1.x)**2+
+                            (camera.y-self.point1.y)**2+
+                            (camera.z-self.point1.z)**2)
+        distance2=math.sqrt((camera.x-self.point2.x)**2+
+                            (camera.y-self.point2.y)**2+
+                            (camera.z-self.point2.z)**2)
+        distance3=math.sqrt((camera.x-self.point3.x)**2+
+                            (camera.y-self.point3.y)**2+
+                            (camera.z-self.point3.z)**2)
+        total=distance1+distance2+distance3
+        
+        polygon.allpollys[total]=self
         
     def draw(self):
         temp=self.point1.subtract(camera)
@@ -55,9 +69,9 @@ class polygon:
         tt.penup()
         
     def drawframe():
-        for poly in polygon.allpollys:
-            poly.draw()
-        polygon.allpollys=[]
+        for poly in sorted(polygon.allpollys,reverse=True):
+            polygon.allpollys[poly].draw()
+        polygon.allpollys={}
                 
 class cube:
     def __init__(self,pos,size):
@@ -102,9 +116,9 @@ projPlaneZ=0
 scale=60
 
 for i in range(5000):
+    tt.clear()
     cube(point(-5,-5,5),3)
     cube(point(5,5,5),3)    
-    tt.clear()
     polygon.drawframe()
     camera.z-=0.006
     turtle.update()
