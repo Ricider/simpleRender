@@ -75,20 +75,37 @@ class polygon:
         polygon.allpollys={}
                 
 class cube:
-    def __init__(self,pos,size,rotz):
+    def __init__(self,pos,size,rotz,roty):
         
-        xcos=math.cos(rotz)
-        xsin=math.sin(rotz)
+        zcos=math.cos(rotz)
+        zsin=math.sin(rotz)
+        
+        ysin=math.sin(roty)
+        ycos=math.cos(roty)
         
         #edges
         x1=pos
-        x2=point(pos.x+size*xcos,pos.y+size*xsin,pos.z)
-        x3=point(pos.x-size*xsin,pos.y+size*xcos,pos.z)
-        x4=point(pos.x+size*xcos-size*xsin,pos.y+size*xcos+size*xsin,pos.z)
-        x5=point(pos.x+size*xcos,pos.y+size*xsin,pos.z+size)
-        x6=point(pos.x+size*xcos-size*xsin,pos.y+size*xcos+size*xsin,pos.z+size)
-        x7=point(pos.x-size*xsin,pos.y+size*xcos,pos.z+size)
-        x8=point(pos.x,pos.y,pos.z+size)
+        x2=point(pos.x+size*zcos,
+                 pos.y+size*zsin,
+                 pos.z)
+        x3=point(pos.x-size*zsin,
+                 pos.y+size*zcos,
+                 pos.z)
+        x4=point(pos.x+size*zcos-size*zsin,
+                 pos.y+size*zcos+size*zsin,
+                 pos.z)
+        x5=point(pos.x+size*zcos,
+                 pos.y+size*zsin,
+                 pos.z+size)
+        x6=point(pos.x+size*zcos-size*zsin,
+                 pos.y+size*zcos+size*zsin,
+                 pos.z+size)
+        x7=point(pos.x-size*zsin,
+                 pos.y+size*zcos,
+                 pos.z+size)
+        x8=point(pos.x,
+                 pos.y,
+                 pos.z+size)
         
         #faces
         a1=polygon(x1,x2,x3,"Red")
@@ -119,14 +136,15 @@ projPlaneZ=0
 scale=60
 
 rotval=0
+rotyval=0
 for i in range(5000):
     tt.clear()  
     rotval+=0.01
-    cube(point(-5,-5,5),3,rotval)
-    cube(point(5,5,5),3,0)    
+    rotyval+=0.01
+    cube(point(-5,-5,5),3,rotval,0)
+    cube(point(5,5,5),3,0,rotyval)    
     polygon.drawframe()
     #camera.z+=0.01
     turtle.update()  
-    
 
 turtle.exitonclick()
