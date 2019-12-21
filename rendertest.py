@@ -75,37 +75,34 @@ class polygon:
         polygon.allpollys={}
                 
 class cube:
-    def __init__(self,pos,size,rotz,roty):
+    def __init__(self,pos,size,rotz):
         
         zcos=math.cos(rotz)
         zsin=math.sin(rotz)
         
-        ysin=math.sin(roty)
-        ycos=math.cos(roty)
-        
         #edges
         x1=pos
         x2=point(pos.x+size*zcos,
-                 pos.y+size*zsin,
-                 pos.z)
-        x3=point(pos.x-size*zsin,
-                 pos.y+size*zcos,
-                 pos.z)
-        x4=point(pos.x+size*zcos-size*zsin,
-                 pos.y+size*zcos+size*zsin,
-                 pos.z)
-        x5=point(pos.x+size*zcos,
-                 pos.y+size*zsin,
-                 pos.z+size)
-        x6=point(pos.x+size*zcos-size*zsin,
-                 pos.y+size*zcos+size*zsin,
-                 pos.z+size)
-        x7=point(pos.x-size*zsin,
-                 pos.y+size*zcos,
-                 pos.z+size)
-        x8=point(pos.x,
                  pos.y,
-                 pos.z+size)
+                 pos.z+size*zsin)
+        x3=point(pos.x-size*zsin,
+                 pos.y,
+                 pos.z+size*zcos)
+        x4=point(pos.x+size*zcos-size*zsin,
+                 pos.y,
+                 pos.z+size*zcos+size*zsin)
+        x5=point(pos.x+size*zcos,
+                 pos.y+size,
+                 pos.z+size*zsin)
+        x6=point(pos.x+size*zcos-size*zsin,
+                 pos.y+size,
+                 pos.z+size*zcos+size*zsin)
+        x7=point(pos.x-size*zsin,
+                 pos.y+size,
+                 pos.z+size*zcos)
+        x8=point(pos.x,
+                 pos.y+size,
+                 pos.z)
         
         #faces
         a1=polygon(x1,x2,x3,"Red")
@@ -136,13 +133,11 @@ projPlaneZ=0
 scale=60
 
 rotval=0
-rotyval=0
 for i in range(5000):
     tt.clear()  
     rotval+=0.01
-    rotyval+=0.01
-    cube(point(-5,-5,5),3,rotval,0)
-    cube(point(5,5,5),3,0,rotyval)    
+    cube(point(-5,-5,5),3,rotval)
+    cube(point(5,5,5),3,0)    
     polygon.drawframe()
     #camera.z+=0.01
     turtle.update()  
