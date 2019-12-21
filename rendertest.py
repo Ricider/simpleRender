@@ -1,5 +1,6 @@
 import turtle
 import math
+import time
 
 class point:
     def __init__(self,x,y,z):
@@ -73,7 +74,28 @@ class polygon:
         for poly in sorted(polygon.allpollys,reverse=True):
             polygon.allpollys[poly].draw()
         polygon.allpollys={}
-                
+  
+class plane:
+    def __init__ (self,pos,sizex,sizez,color,isVertical=False):
+           
+              
+        #edges
+        if not isVertical:
+            x1=pos
+            x2=point(pos.x,pos.y,pos.z+sizez)
+            x3=point(pos.x+sizex,pos.y,pos.z)
+            x4=point(pos.x+sizex,pos.y,pos.z+sizez)
+        else:
+            x1=pos
+            x2=point(pos.x,pos.y+sizez,pos.z)
+            x3=point(pos.x+sizex,pos.y,pos.z)
+            x4=point(pos.x+sizex,pos.y+sizez,pos.z)   
+            
+        #faces
+        a1=polygon(x1,x2,x3,color)
+        a2=polygon(x2,x3,x4,color)
+                 
+               
 class cube:
     def __init__(self,pos,size,rotz):
         
@@ -133,6 +155,9 @@ projPlaneZ=0
 scale=60
 
 rotval=0
+framecount=1
+startTime=time.time()
+
 while True:
     tt.clear()  
     rotval+=0.03
@@ -140,9 +165,21 @@ while True:
     cube(point(0,-2,5),-3,rotval)
     cube(point(0,2,5),3,rotval*-1)
     cube(point(0,5,5),-3,rotval*-1)
+    
+    cube(point(-8,-7,2),3*abs(math.cos(framecount/50)),0)
+    cube(point(8-3*abs(math.cos(framecount/50)),-7,2),3*abs(math.cos(framecount/50)),0)  
+    
+
+    cube(point(-1+7*math.cos(framecount/50),7,2),2,0)    
+    
+    plane(point(-8,-7,2),16,5,"Teal")
+    plane(point(-8,-7,7),16,16,"Teal",isVertical=True)
+    plane(point(-8,9,2),16,5,"Teal")
+    framecount+=1
+    if framecount%100==0:
+        print("fps=", 100/(time.time()-startTime),"poly count=", len(polygon.allpollys))
+        startTime=time.time()
     polygon.drawframe()
-    if rotval%1>0.5: camera.z+=0.01
-    else: camera.z-=0.01
-    turtle.update()  
+    turtle.update()
 
 turtle.exitonclick()
