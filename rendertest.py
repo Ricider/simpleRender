@@ -133,13 +133,16 @@ projPlaneZ=0
 scale=60
 
 rotval=0
-for i in range(5000):
+while True:
     tt.clear()  
-    rotval+=0.01
-    cube(point(-5,-5,5),3,rotval)
-    cube(point(5,5,5),3,0)    
+    rotval+=0.03
+    cube(point(0,-5,5),3,rotval)
+    cube(point(0,-2,5),-3,rotval)
+    cube(point(0,2,5),3,rotval*-1)
+    cube(point(0,5,5),-3,rotval*-1)
     polygon.drawframe()
-    #camera.z+=0.01
+    if rotval%1>0.5: camera.z+=0.01
+    else: camera.z-=0.01
     turtle.update()  
 
 turtle.exitonclick()
