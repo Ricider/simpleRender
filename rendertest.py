@@ -44,6 +44,7 @@ class polygon:
                             (camera.y-self.point3.y)**2+
                             (camera.z-self.point3.z)**2)
         total=distance1+distance2+distance3
+        if total in polygon.allpollys: total+=0.00001
         
         polygon.allpollys[total]=self
         
@@ -116,12 +117,12 @@ projPlaneZ=0
 scale=60
 
 for i in range(5000):
-    tt.clear()
+    tt.clear()  
     cube(point(-5,-5,5),3)
     cube(point(5,5,5),3)    
     polygon.drawframe()
-    camera.z-=0.006
-    turtle.update()
+    camera.z+=0.01
+    turtle.update()  
     
 
 turtle.exitonclick()
