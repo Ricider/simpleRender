@@ -57,6 +57,7 @@ class polygon:
     def drawframe():
         for poly in polygon.allpollys:
             poly.draw()
+        polygon.allpollys=[]
                 
 class cube:
     def __init__(self,pos,size):
@@ -70,6 +71,7 @@ class cube:
         x5=point(pos.x,pos.y+size,pos.z+size)
         x6=point(pos.x+size,pos.y+size,pos.z+size)
         x7=point(pos.x+size,pos.y,pos.z+size)
+        x8=point(pos.x,pos.y,pos.z+size)
         
         #faces
         a1=polygon(x1,x2,x3,"Red")
@@ -77,21 +79,35 @@ class cube:
         b1=polygon(x4,x2,x5,"Blue")
         b2=polygon(x5,x4,x6,"Blue")
         c1=polygon(x4,x7,x3,"Green")
-        c2=polygon(x4,x6,x7,"Green")                   
+        c2=polygon(x4,x6,x7,"Green")
+        
+        anot1=polygon(x5,x8,x7,"Brown")
+        anot2=polygon(x5,x6,x7,"Brown")
+        bnot1=polygon(x1,x8,x3,"Pink")
+        bnot2=polygon(x3,x8,x7,"Pink")
+        cnot1=polygon(x2,x1,x8,"Purple")
+        cnot2=polygon(x2,x5,x8,"Purple")
 
 #prep
 tt=turtle.Turtle()
 tt.color("Black")
 tt.hideturtle()
 tt.penup()
-tt.speed(4)
+tt.speed(0)
+turtle.tracer(0, 0)
 
 #perspective elements
-camera=point(0,0,-20)
+camera=point(0,0,-3)
 projPlaneZ=0
 scale=60
 
-cube(point(-5,-5,5),1)
-polygon.drawframe()
+for i in range(5000):
+    cube(point(-5,-5,5),3)
+    cube(point(5,5,5),3)    
+    tt.clear()
+    polygon.drawframe()
+    camera.z-=0.006
+    turtle.update()
+    
 
 turtle.exitonclick()
